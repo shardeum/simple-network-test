@@ -4,7 +4,7 @@ const { performance } = require('perf_hooks');
 require('dotenv').config();
 
 
-const no_tx = 5;
+const no_tx = process.env.tx_no;
 
 async function sendTransactions(no_tx) {
   const provider = new ethers.providers.JsonRpcProvider(process.env.rpc);
