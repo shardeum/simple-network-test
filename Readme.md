@@ -7,26 +7,27 @@ A simple script to test test p2p trsnactions and log them.
 
 2. Clone this repositiory
 
-`
+```
 git clone https://github.com/shardeum/simple-network-test.git
-`
+```
 
 3. Install node modules
 
-`
+```
 npm i
-`
+```
 
-4. Add the details in env file
 
-`
-privateKey=YOUR_PRIVATE_KEY
-rpc=YOUR_LOCAL_RPC_ENDPOINT
-tx_no=NUMBER_OF_TRANSACTIONS
-`
+4. To run a transaction test, use the following command:
 
-5. Run the script
+```
+node tx.js --no_tx 5 --rpc https://your-rpc-url --privateKey yourPrivateKey --amount 1
+```
 
-`
-node tx.js
-`
+
+To run a rpc test, use the following command
+
+```
+node rpc.js --rpc https://your-rpc-url --address toEthereumAddress
+```
+

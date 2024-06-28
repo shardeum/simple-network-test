@@ -1,19 +1,33 @@
 const { ethers } = require('ethers');
-const logger = require('./logger'); 
+const logger = require('./logger');
 const { performance } = require('perf_hooks');
 require('dotenv').config();
+const { Command } = require('commander');
 
+const program = new Command();
 
-const no_tx = process.env.tx_no;
+program
+  .option('-n, --no_tx <number>', 'number of transactions', parseInt)
+  .option('-r, --rpc <url>', 'RPC provider URL')
+  .option('-p, --privateKey <key>', 'private key for wallet')
+  .option('-a, --amount <amount>', 'amount to send in ETH')
+  .parse(process.argv);
 
-async function sendTransactions(no_tx) {
-  const provider = new ethers.providers.JsonRpcProvider(process.env.rpc);
+const options = program.opts();
 
-  const wallet = new ethers.Wallet(process.env.privateKey, provider);
+if (!options.no_tx || !options.rpc || !options.privateKey || !options.amount) {
+  console.error('All options --no_tx, --rpc, --privateKey, and --amount are required');
+  process.exit(1);
+}
+
+async function sendTransactions(no_tx, rpc, privateKey, amount) {
+  const provider = new ethers.providers.JsonRpcProvider(rpc);
+
+  const wallet = new ethers.Wallet(privateKey, provider);
 
   const tx = {
-    to: '0x49f276554cb1904fd53fbd5ab874d53e76197727', //random address
-    value: ethers.utils.parseEther('0.01')
+    to: '0x49f276554cb1904fd53fbd5ab874d53e76197727', // random address
+    value: ethers.utils.parseEther(amount)
   };
 
   for (let i = 0; i < no_tx; i++) {
@@ -49,4 +63,4 @@ async function sendTransactions(no_tx) {
   }
 }
 
-sendTransactions(no_tx);
+sendTransactions(options.no_tx, options.rpc, options.privateKey, options.amount);
