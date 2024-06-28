@@ -28,6 +28,6 @@ node tx.js --no_tx 5 --rpc https://your-rpc-url --privateKey yourPrivateKey --am
 To run a rpc test, use the following command
 
 ```
-node rpc.js --rpc https://your-rpc-url --address toEthereumAddress
+node rpc.js --rpc https://your-rpc-url --address 0xanyAddress
 ```
 
